@@ -1,9 +1,8 @@
 const path = require("path");
 const env = process.env.NODE_ENV || "production";
 const package = require("./package.json");
+const meta = require("./meta.json");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-console.log(package.name);
 
 module.exports = {
     mode: env,
@@ -31,13 +30,22 @@ module.exports = {
                 enforce: "pre",
                 test: /\.js$/,
                 loader: "source-map-loader"
+            },
+            {
+                test: /\.(png|svg|jpg|ico)$/,
+                loader: "file-loader",
+                options: {
+                    name: "[name].[ext]"
+                }
             }
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({
             title: package.name,
-            filename: `200.html`
+            filename: `200.html`,
+            favicon: "favicon.png",
+            meta
         })
     ]
 };
