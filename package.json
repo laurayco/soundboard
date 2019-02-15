@@ -1,0 +1,26 @@
+{
+  "name": "soundboard",
+  "version": "1.0.0",
+  "description": "client side sound board app",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha *.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laurayco/soundboard.git"
+  },
+  "keywords": [
+    "typescript",
+    "react",
+    "client",
+    "side",
+    "iddb"
+  ],
+  "author": "Lauren Connors",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/laurayco/soundboard/issues"
+  },
+  "homepage": "https://github.com/laurayco/soundboard#readme"
+}
