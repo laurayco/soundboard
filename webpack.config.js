@@ -9,7 +9,8 @@ module.exports = {
     entry: path.resolve(__dirname,"src","index.tsx"),
     output: {
         filename: "client.js",
-        path: path.resolve((__dirname, "bin"))
+        path: path.resolve((__dirname, "bin")),
+        publicPath: "/"
     },
     devtool: env==="production" ? false : "source-map",
     resolve: {
