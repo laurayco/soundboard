@@ -120,33 +120,16 @@ export default class DatabaseManager {
         await this.requires_init();
         const transaction = this.database.transaction("boards","readonly");
         const store = transaction.objectStore("boards");
-        const cursor = await store.index("slug").openCursor(IDBKeyRange.only(slug));
         const results = [] as models.Board[];
-        while(cursor) {
-            results.push(cursor.value);
-            cursor.continue();
-        }
-        if(results.length===1) {
-            return results[0];
-        } else if(results.length>1){
-            // found more than one: should warn here.
-            return results[0];
-        } else {
-            // not found: should throw exception here.
-            return null;
-        }
+        const index = store.index("slug");
+        return index.get(slug) as Promise<models.Board>;
     }
 
     async get_board_soundbytes(id: number) : Promise<models.SoundByte[]> {
         await this.requires_init();
         const transaction = this.database.transaction("soundbytes","readonly");
         const store = transaction.objectStore("soundbytes");
-        const cursor = await store.index("boards").openCursor(IDBKeyRange.only(id));
-        const results = [] as models.SoundByte[];
-        while(cursor) {
-            results.push(cursor.value);
-            cursor.continue();
-        }
+        const results = await store.index("boards").getAll(IDBKeyRange.only(id)) as models.SoundByte[];
         return results;
     }
 
@@ -174,7 +157,7 @@ export default class DatabaseManager {
     }
 
     create_slug(text: string) : string {
-        return text;
+        return encodeURIComponent(text.toLowerCase().replace(/\s+/g,"_"));
     }
 
     async create_board(name: string) : Promise<models.Board> {
@@ -221,7 +204,7 @@ export default class DatabaseManager {
             data: source,
             boards
         }) as models.SoundByte;
-        const id = await this.write_document("boards", data);
+        const id = await this.write_document("soundbytes", data);
         data.id = id;
         return data;
     }
