@@ -1,8 +1,9 @@
 import * as React from "react";
-import {RouteComponentProps, Link} from "react-router-dom";
+import {RouteComponentProps, Link, Route} from "react-router-dom";
 import {Context} from "../data";
 import * as models from "../data/models";
 import { compare_arrays } from "../utils";
+import BoardComponent from "./board";
 
 const FREQUENCY = 1000 * 5;
 
@@ -108,8 +109,9 @@ class HomePage extends React.Component<RouteComponentProps, HomePageState> {
             <h1>Boards:</h1>
             <ul>
                 {boards.map(board=>{
+                    const url = `/board/${board.slug}`;
                     return <li key={board.id}>
-                        <Link to={`/board/${board.slug}`}>
+                        <Link to={url}>
                             {board.name}
                         </Link>
                     </li>
