@@ -1,5 +1,6 @@
 import * as models from "./models";
 import { openDb, UpgradeDB, DB } from "idb";
+import * as React from "react";
 
 export default class DatabaseManager {
     static database_name = "SoundMixer";
@@ -226,3 +227,5 @@ export default class DatabaseManager {
     }
 
 }
+
+export const Context = React.createContext<DatabaseManager>(new DatabaseManager());
